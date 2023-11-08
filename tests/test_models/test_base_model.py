@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 from unittest.mock import patch
 from io import StringIO
 from uuid import uuid4
+from models.engine.file_storage import FileStorage
+import os
 
 
 class TestBaseModel(unittest.TestCase):
@@ -15,6 +17,15 @@ class TestBaseModel(unittest.TestCase):
         """Set up method"""
         self.obj1 = BaseModel()
         self.obj2 = BaseModel()
+        fs = FileStorage()
+        fs.reset()
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+
+    def tearDown(self):
+        """Tear down method to be used after each test_method"""
+        if os.path.exists("file.json"):
+            os.remove("file.json")
 
     def test_id(self):
         """Test for the id component"""
@@ -82,7 +93,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNone(created_attr)
         self.assertIsNone(updated_attr)
         self.assertNotEqual(class_name_attr, "BaseModel")
-        #Vary the created_at.
+        # Vary the created_at.
         obj_dict = self.obj1.to_dict()
         attrs_dict = {"created_at": obj_dict["created_at"]}
         obj = BaseModel(**attrs_dict)
@@ -92,7 +103,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNone(id_attr)
         self.assertIsInstance(created_attr, datetime)
         self.assertIsNone(updated_attr)
-        #Vary the updated_at.
+        # Vary the updated_at.
         attrs_dict = {"updated_at": obj_dict["updated_at"]}
         obj = BaseModel(**attrs_dict)
         id_attr = getattr(obj, "id", None)
@@ -101,7 +112,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNone(id_attr)
         self.assertIsInstance(updated_attr, datetime)
         self.assertIsNone(created_attr)
-        #Vary the updated_at.
+        # Vary the updated_at.
         attrs_dict = {
                 "updated_at": obj_dict["updated_at"],
                 "created_at": obj_dict["created_at"]
@@ -113,7 +124,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNone(id_attr)
         self.assertIsInstance(updated_attr, datetime)
         self.assertIsInstance(created_attr, datetime)
-        #Test, when all of the dictionary is used to initialize an object.
+        # Test, when all of the dictionary is used to initialize an object.
         obj = BaseModel(**obj_dict)
         id_attr = getattr(obj, "id", None)
         created_attr = getattr(obj, "created_at", None)
@@ -123,7 +134,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(updated_attr, datetime)
         self.assertIsInstance(created_attr, datetime)
         self.assertNotEqual(class_name_attr, "BaseModel")
-        #Initialize with nothing.
+        # Initialize with nothing.
         obj2_dict = self.obj2.to_dict()
         created_attr = getattr(obj, "created_at", None)
         updated_attr = getattr(obj, "updated_at", None)
@@ -132,3 +143,22 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(updated_attr, datetime)
         self.assertIsInstance(created_attr, datetime)
         self.assertNotEqual(class_name_attr, "BaseModel")
+
+    def test_save_reload(self):
+        fs = FileStorage()
+        obj1 = BaseModel()  # This will use the save method.
+        obj2 = BaseModel()
+        obj2.save()
+        fs.reset()
+        self.assertDictEqual(fs.all(), {})
+        fs.reload()
+        expected_dict = fs.all()
+        expected_keys = list(expected_dict.keys())
+        expected_vals = list(expected_dict.values())
+        self.assertIsInstance(expected_dict, dict)
+        self.assertEqual(len(expected_keys), 2)
+        self.assertRegex(
+                expected_keys[0],
+                r"^BaseModel\.\w+-\w+-\w+-\w+-\w+$"
+                )
+        self.assertIsInstance(expected_vals[0], BaseModel)

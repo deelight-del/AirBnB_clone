@@ -36,15 +36,16 @@ class FileStorage:
         """ This method serializes the __objects dictionary to a JSON
         file using the class attribute file_path"""
         object_dict = dict()
-        for k, v in FileStorage.__objects.items():
-            object_dict[k] = v.to_dict()
+        if FileStorage.__objects:
+            for k, v in FileStorage.__objects.items():
+                object_dict[k] = v.to_dict()
         with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
             json.dump(object_dict, f)
 
     def reload(self):
         """ This method deserializes the JSON file to the class private
         attributes `FileStorage` """
-        classes_dictionary = {"BaseModel" : BaseModel}
+        classes_dictionary = {"BaseModel": BaseModel}
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 dict_of_objects = json.load(f)
@@ -53,3 +54,16 @@ class FileStorage:
                     FileStorage.__objects[key] = object_class(**val)
         except FileNotFoundError:
             pass
+
+    def reset(self, dictionary=dict()):
+        """ The method that resets the dictionary to an
+        empty dictionary
+
+        Args:
+            self: The instance refernce
+            dictionary: The empty dictionary to initialize to.
+
+        Return:
+            Nothing.
+        """
+        FileStorage.__objects = dict()
