@@ -5,17 +5,37 @@ in our entire program"""
 
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
     """Class definition of the BaseModel with some public instance
     attributes, and some public instance methods"""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """The special method init that is called whenever a new instance
-        is created."""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        is created.
+
+        Args:
+            args - variable length arguments.
+            kwargs - variable length key worded arguments
+
+        Return:
+            Nothing.
+        """
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "__class__":
+                    continue
+                if k == "created_at" or k == "updated_at":
+                    date_value = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
+                    setattr(self, k, date_value)
+                else:
+                    setattr(self, k, v)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """The magic method that is used by the print function to print out
@@ -33,6 +53,7 @@ class BaseModel:
         """This method updates the `updated_at` public attribute of
         the instance with the current date and time, as a datetime object.
         """
+        models.storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):

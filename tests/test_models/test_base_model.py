@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from datetime import datetime, timedelta
 from unittest.mock import patch
 from io import StringIO
+from uuid import uuid4
 
 
 class TestBaseModel(unittest.TestCase):
@@ -68,3 +69,66 @@ class TestBaseModel(unittest.TestCase):
                 save_dict["updated_at"],
                 r"^\d{1,4}-([0][1-9]|[1][0-2])-\d\d.+"
                 )
+
+    def test_init(self):
+        """ This method will test the init method of the BaseModel class """
+        attrs_dict = {"id": str(uuid4())}
+        obj = BaseModel(**attrs_dict)
+        id_attr = getattr(obj, "id", None)
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        class_name_attr = getattr(obj, "__class__", None)
+        self.assertEqual(id_attr, attrs_dict["id"])
+        self.assertIsNone(created_attr)
+        self.assertIsNone(updated_attr)
+        self.assertNotEqual(class_name_attr, "BaseModel")
+        #Vary the created_at.
+        obj_dict = self.obj1.to_dict()
+        attrs_dict = {"created_at": obj_dict["created_at"]}
+        obj = BaseModel(**attrs_dict)
+        id_attr = getattr(obj, "id", None)
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        self.assertIsNone(id_attr)
+        self.assertIsInstance(created_attr, datetime)
+        self.assertIsNone(updated_attr)
+        #Vary the updated_at.
+        attrs_dict = {"updated_at": obj_dict["updated_at"]}
+        obj = BaseModel(**attrs_dict)
+        id_attr = getattr(obj, "id", None)
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        self.assertIsNone(id_attr)
+        self.assertIsInstance(updated_attr, datetime)
+        self.assertIsNone(created_attr)
+        #Vary the updated_at.
+        attrs_dict = {
+                "updated_at": obj_dict["updated_at"],
+                "created_at": obj_dict["created_at"]
+                }
+        obj = BaseModel(**attrs_dict)
+        id_attr = getattr(obj, "id", None)
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        self.assertIsNone(id_attr)
+        self.assertIsInstance(updated_attr, datetime)
+        self.assertIsInstance(created_attr, datetime)
+        #Test, when all of the dictionary is used to initialize an object.
+        obj = BaseModel(**obj_dict)
+        id_attr = getattr(obj, "id", None)
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        class_name_attr = getattr(obj, "__class__", None)
+        self.assertEqual(id_attr, obj_dict["id"])
+        self.assertIsInstance(updated_attr, datetime)
+        self.assertIsInstance(created_attr, datetime)
+        self.assertNotEqual(class_name_attr, "BaseModel")
+        #Initialize with nothing.
+        obj2_dict = self.obj2.to_dict()
+        created_attr = getattr(obj, "created_at", None)
+        updated_attr = getattr(obj, "updated_at", None)
+        class_name_attr = getattr(obj, "__class__", None)
+        self.assertNotEqual(obj2_dict["id"], obj_dict["id"])
+        self.assertIsInstance(updated_attr, datetime)
+        self.assertIsInstance(created_attr, datetime)
+        self.assertNotEqual(class_name_attr, "BaseModel")
