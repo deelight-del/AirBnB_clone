@@ -67,3 +67,9 @@ class FileStorage:
             Nothing.
         """
         FileStorage.__objects = dict()
+
+    def delete_instance(self, key):
+        """Method used to delete an instance from the __objects
+        dictionary using the class name and its id"""
+        if FileStorage.__objects.get(key, None):
+            del FileStorage.__objects[key]
