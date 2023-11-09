@@ -18,12 +18,6 @@ class HBNBCommand(cmd.Cmd):
         self.storage = models.storage  # storage is already reloaded.
         self.dict_of_objects = self.storage.all()
 
-    def do_printf(self, args):
-        """Function to demonstrate parsing of commands"""
-        actual_cmd = parse_arg(args)
-        for c in actual_cmd:
-            print(c)
-
     def emptyline(self):
         """Method overriden to deal with empty lines appropriately."""
         pass
