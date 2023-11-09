@@ -5,6 +5,7 @@ from respective Base Classes and others."""
 
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -45,7 +46,10 @@ class FileStorage:
     def reload(self):
         """ This method deserializes the JSON file to the class private
         attributes `FileStorage` """
-        classes_dictionary = {"BaseModel": BaseModel}
+        classes_dictionary = {
+                "BaseModel": BaseModel,
+                "User": User
+                }
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 dict_of_objects = json.load(f)

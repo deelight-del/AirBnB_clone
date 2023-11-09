@@ -3,6 +3,7 @@
 import readline
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 import models
 
 
@@ -14,7 +15,7 @@ class HBNBCommand(cmd.Cmd):
     def __init__(self):
         """The magic init method for initializing attributes"""
         super().__init__()
-        self.valid_classes = ["BaseModel"]
+        self.valid_classes = {"BaseModel": BaseModel, "User": User}
         self.storage = models.storage  # storage is already reloaded.
         self.dict_of_objects = self.storage.all()
 
@@ -40,9 +41,10 @@ class HBNBCommand(cmd.Cmd):
                 len(list_of_args) > 1):
             print("** class doesn't exist **")
         else:
-            bm_object = BaseModel()
-            bm_object.save()
-            print(bm_object.id)
+            Class_of_object = self.valid_classes.get(list_of_args[0])
+            any_object = Class_of_object()
+            any_object.save()
+            print(any_object.id)
 
     def do_show(self, args):
         """Command to print a given object based on the class name and id"""
