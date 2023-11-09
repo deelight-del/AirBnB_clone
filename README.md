@@ -61,44 +61,88 @@ python -m console.py
 ```bash
 vagrant@ubuntu-focal:~/AirBnB_clone$ ./console.py
 (hbnb) help
-
-Documented commands (type help <topic>):
+```
+`Documented commands (type help <topic>):
 ========================================
-EOF  all  create  destroy  help  printf  quit  show  update
 
+EOF  all  create  destroy  help  printf  quit  show  update`
+
+```bash
 (hbnb)
 (hbnb) help quit
-Quit command to exit the program
+```
+`Quit command to exit the program`
+
+```bash
 (hbnb)
 (hbnb)
 (hbnb) quit
-vagrant@ubuntu-focal:~/AirBnB_clone$
 ```
+
 
 ```bash
 (hbnb) all MyModel
+```
+
 ** class doesn't exist **
+
+```bash
 (hbnb) show BaseModel
-** instance id missing **
+```
+**instance id missing**
+
+```bash
 (hbnb) show BaseModel My_First_Model
-** no instance found **
+```
+
+**no instance found**
+
+```bash
 (hbnb) create BaseModel
-49faff9a-6318-451f-87b6-910505c55907
+```
+**49faff9a-6318-451f-87b6-910505c55907**
+
+
+```bash
 (hbnb) all BaseModel
-["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]
+```
+
+**["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]**
+
+```bash
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
-[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}
+```
+**[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}**
+
+```bash
 (hbnb) destroy
-** class name missing **
+```
+**class name missing**
+
+```bash
 (hbnb) update BaseModel 49faff9a-6318-451f-87b6-910505c55907 first_name "Betty"
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
-[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}
+```
+
+**[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}**
+
+```bash
 (hbnb) create BaseModel
-2dd6ef5c-467c-4f82-9521-a772ea7d84e9
+```
+
+**2dd6ef5c-467c-4f82-9521-a772ea7d84e9**
+
+```bash
 (hbnb) all BaseModel
-["[BaseModel] (2dd6ef5c-467c-4f82-9521-a772ea7d84e9) {'id': '2dd6ef5c-467c-4f82-9521-a772ea7d84e9', 'created_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639717), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639724)}", "[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}"]
+```
+
+**["[BaseModel] (2dd6ef5c-467c-4f82-9521-a772ea7d84e9) {'id': '2dd6ef5c-467c-4f82-9521-a772ea7d84e9', 'created_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639717), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639724)}", "[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}"]**
+
+```bash
 (hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
-** no instance found **
+```
+
+**no instance found**
 (hbnb) 
 ```
