@@ -1,6 +1,6 @@
-## AIRBnB clone part 1.
+# AIRBnB clone part 1.
 
-### THE PROJECT.
+## THE PROJECT.
 
 This project is a collaboration project issued by
 ALX/Holberton towards being completely formed as a
@@ -13,7 +13,7 @@ to build a storage engine to storing persistent objects of different
 classes, and we build a corresponding console as a play ground for the
 built `storage engine`.
 
-### THE CONSOLE (THE COMMAND INTERPRETER).
+## THE CONSOLE (THE COMMAND INTERPRETER).
 
 The console is a single use command line interface that we built to carry out
 specific functions and methods that are peculiar to our `storage engine`.
@@ -27,7 +27,7 @@ It will also be able to execute bash commands using the special `!` symbol befor
 
 
 The console built inherits from the Python `cmd.Cmd` class.
-#### How to start the console.
+### How to start the console.
 
 The following code are workable on a UNIX machine - Implement the variant of the code based on the 
 instruction, using your machine specific syntax.
@@ -55,7 +55,7 @@ OR USE
 python -m console.py
 ```
 
-#### EXAMPLES.
+### EXAMPLES.
 
 
 ```bash
@@ -63,7 +63,7 @@ vagrant@ubuntu-focal:~/AirBnB_clone$ ./console.py
 (hbnb) help
 ```
 `Documented commands (type help <topic>):
-========================================
+\========================================`
 
 EOF  all  create  destroy  help  printf  quit  show  update`
 
@@ -144,5 +144,7 @@ EOF  all  create  destroy  help  printf  quit  show  update`
 ```
 
 **no instance found**
+
+
 (hbnb) 
 ```
