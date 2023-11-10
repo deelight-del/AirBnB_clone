@@ -21,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
         """The magic init method for initializing attributes"""
         super().__init__()
         self.valid_classes = {
-                "BaseModel": BaseModel, 
+                "BaseModel": BaseModel,
                 "User": User,
                 "State": State,
                 "City": City,
