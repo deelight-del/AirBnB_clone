@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """EOF command to quit the commadnline Ctrl + D"""
-        # print()
+        print()
         return True
 
     def do_create(self, args):
