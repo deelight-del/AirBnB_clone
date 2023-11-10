@@ -62,12 +62,12 @@ class HBNBCommand(cmd.Cmd):
                 cmd = list_of_cmd_attr.pop(1)
             except IndexError:
                 cmd = "Invalid"
-            args = " ".join(list_of_cmd_attr)  #You won't need this eventua
+            args = " ".join(list_of_cmd_attr)
             function = self_cmd_dict.get(cmd, None)
             if function is None:
                 r = super(HBNBCommand, self).onecmd(line)
             else:
-                function(args)  #Function knows how to handle a list directly.
+                function(args)
             r = False
         else:
             r = super(HBNBCommand, self).onecmd(line)
