@@ -4,6 +4,7 @@ from the BaseModel"""
 
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """The class definition of the User Class that will inherit
     from the BaseModel"""

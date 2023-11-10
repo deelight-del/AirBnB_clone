@@ -4,6 +4,11 @@ import readline
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import models
 
 
@@ -15,7 +20,14 @@ class HBNBCommand(cmd.Cmd):
     def __init__(self):
         """The magic init method for initializing attributes"""
         super().__init__()
-        self.valid_classes = {"BaseModel": BaseModel, "User": User}
+        self.valid_classes = {
+                "BaseModel": BaseModel, 
+                "User": User,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Place": Place,
+                "Review": Review}
         self.storage = models.storage  # storage is already reloaded.
         self.dict_of_objects = self.storage.all()
 
