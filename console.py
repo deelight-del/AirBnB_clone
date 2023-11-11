@@ -81,9 +81,9 @@ class HBNBCommand(cmd.Cmd):
         """command to crate some instance: This create will
         accept some class (either BaseModel or other specified class
         and will output the id of the newly created object"""
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
@@ -98,9 +98,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """Command to print a given object based on the class name and id"""
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
@@ -118,9 +118,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Method to destroy an instance with given id """
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
@@ -139,9 +139,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """The command for showing all instances or instances of a class"""
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         if len(list_of_args) == 0:
             list_of_prints = []
@@ -160,9 +160,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, args):
         """The command for showing all instances or instances of a class"""
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         if len(list_of_args) == 0:
             count_of_instances = 0
@@ -181,9 +181,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """The update command for updating a given instance using its id"""
-        if type(args) == str:
+        if isinstance(args, str):
             list_of_args = self.parse_arg(args)
-        elif type(args) == list:
+        elif isinstance(args, list):
             list_of_args = args[:]
         # Let us try with updating with dict_of_objects...
         if len(list_of_args) == 0:
