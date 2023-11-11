@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""This is the entry point for our command line and execution loop"""
+"""This is the entry point for our command line and execution loop
+This module contains the class definiton of the HBNB """
+
 import readline
 import cmd
 from models.base_model import BaseModel
@@ -42,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """EOF command to quit the commadnline Ctrl + D"""
-        print()
+        # print()
         return True
 
     def onecmd(self, line):

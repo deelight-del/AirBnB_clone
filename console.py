@@ -79,7 +79,9 @@ class HBNBCommand(cmd.Cmd):
         return r
 
     def do_create(self, args):
-        """command to crate some instance"""
+        """command to crate some instance: This create will
+        accept some class (either BaseModel or other specified class
+        and will output the id of the newly created object"""
         if type(args) == str:
             list_of_args = parse_arg(args)
         elif type(args) == list:
