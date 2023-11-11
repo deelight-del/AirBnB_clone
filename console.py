@@ -55,19 +55,22 @@ class HBNBCommand(cmd.Cmd):
                 "update": self.do_update
                 }
         list_of_cmd = parse_arg(line)
-        cmd = list_of_cmd[0]
+        try:
+            cmd = list_of_cmd[0]
+        except IndexError:
+            cmd = "Invalid"
         if "." in cmd and "(" in cmd:
             list_of_cmd_attr = parse_dot_command(line)
             try:
                 cmd = list_of_cmd_attr.pop(1)
             except IndexError:
                 cmd = "Invalid"
-            args = " ".join(list_of_cmd_attr)  #You won't need this eventua
+            # args = " ".join(list_of_cmd_attr)  You won't need this eventua
             function = self_cmd_dict.get(cmd, None)
             if function is None:
                 r = super(HBNBCommand, self).onecmd(line)
             else:
-                function(args)  #Function knows how to handle a list directly.
+                function(list_of_cmd_attr)
             r = False
         else:
             r = super(HBNBCommand, self).onecmd(line)
@@ -75,7 +78,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """command to crate some instance"""
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
         elif (list_of_args[0] not in self.valid_classes or
@@ -89,13 +95,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """Command to print a given object based on the class name and id"""
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
         elif (list_of_args[0] not in self.valid_classes):
             print("** class doesn't exist **")
         elif len(list_of_args) == 1:
-            print("** instance id is missing **")
+            print("** instance id missing **")
         else:
             key = f"{list_of_args[0]}.{list_of_args[1]}"
             obj = self.dict_of_objects.get(key, None)
@@ -106,13 +115,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Method to destroy an instance with given id """
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         if len(list_of_args) == 0:
             print("** class name missing **")
         elif (list_of_args[0] not in self.valid_classes):
             print("** class doesn't exist **")
         elif len(list_of_args) == 1:
-            print("** instance id is missing **")
+            print("** instance id missing **")
         else:
             key = f"{list_of_args[0]}.{list_of_args[1]}"
             obj = self.dict_of_objects.get(key, None)
@@ -124,7 +136,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """The command for showing all instances or instances of a class"""
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         if len(list_of_args) == 0:
             list_of_prints = []
             for obj in self.dict_of_objects.values():
@@ -142,7 +157,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, args):
         """The command for showing all instances or instances of a class"""
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         if len(list_of_args) == 0:
             count_of_instances = 0
             for obj in self.dict_of_objects.values():
@@ -160,7 +178,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """The update command for updating a given instance using its id"""
-        list_of_args = parse_arg(args)
+        if type(args) == str:
+            list_of_args = parse_arg(args)
+        elif type(args) == list:
+            list_of_args = args[:]
         # Let us try with updating with dict_of_objects...
         if len(list_of_args) == 0:
             print("** class name missing **")
