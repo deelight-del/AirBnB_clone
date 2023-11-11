@@ -13,7 +13,6 @@ from models.place import Place
 from models.review import Review
 import models
 import re
-from helper_console import parse_arg, parse_dot_command
 
 
 class HBNBCommand(cmd.Cmd):
@@ -45,7 +44,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """EOF command to quit the commadnline Ctrl + D"""
-        print()
         return True
 
 #    def onecmd(self, line):
@@ -84,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         accept some class (either BaseModel or other specified class
         and will output the id of the newly created object"""
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         if len(list_of_args) == 0:
@@ -96,12 +94,12 @@ class HBNBCommand(cmd.Cmd):
             Class_of_object = self.valid_classes.get(list_of_args[0])
             any_object = Class_of_object()
             any_object.save()
-            print("\n", any_object.id)
+            print(any_object.id)
 
     def do_show(self, args):
         """Command to print a given object based on the class name and id"""
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         if len(list_of_args) == 0:
@@ -121,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, args):
         """ Method to destroy an instance with given id """
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         if len(list_of_args) == 0:
@@ -142,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """The command for showing all instances or instances of a class"""
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         if len(list_of_args) == 0:
@@ -163,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """The command for showing all instances or instances of a class"""
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         if len(list_of_args) == 0:
@@ -184,7 +182,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """The update command for updating a given instance using its id"""
         if type(args) == str:
-            list_of_args = parse_arg(args)
+            list_of_args = self.parse_arg(args)
         elif type(args) == list:
             list_of_args = args[:]
         # Let us try with updating with dict_of_objects...
@@ -211,6 +209,70 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = list_of_args[3]
             setattr(obj, attr_name, attr_value)
             models.storage.save()
+
+    def parse_arg(self, str_cmd):
+        """Function that parses the string command"""
+        l_cmd = []
+        characters = ""
+        within_quotes = False
+        for char in str_cmd:
+            if char == "\"" or within_quotes:
+                if char == "\"" and within_quotes:
+                    within_quotes = False
+                    l_cmd.append(characters)
+                    characters = ""
+                    continue
+                elif char == "\"":
+                    within_quotes = True
+                    continue
+                else:
+                    characters += char
+            elif not within_quotes and (char == " " or char == "\n"):
+                l_cmd.append(characters)
+                characters = ""
+            else:
+                characters = characters + char
+        if characters != "":
+            l_cmd.append(characters)
+        # remove idle words or arguments
+        new_list = []
+        for chars in l_cmd:
+            if chars:
+                new_list.append(chars)
+        return new_list
+
+    def parse_dot_command(self, str_cmd):
+        """Function that parses the string command"""
+        l_cmd = []
+        characters = ""
+        split_string = ".,( )"
+        within_quotes = False
+        for char in str_cmd:
+            if char == "\"" or within_quotes:
+                if char == "\"" and within_quotes:
+                    within_quotes = False
+                    l_cmd.append(characters)
+                    characters = ""
+                    continue
+                elif char == "\"":
+                    within_quotes = True
+                    continue
+                else:
+                    characters += char
+            elif not within_quotes and (char in split_string or char == "\n"):
+                l_cmd.append(characters)
+                characters = ""
+            else:
+                characters = characters + char
+        if characters != "":
+            l_cmd.append(characters)
+        # remove idle words or arguments
+        new_list = []
+        for chars in l_cmd:
+            if chars:
+                new_list.append(chars)
+        return new_list
+
 
 
 if __name__ == "__main__":
