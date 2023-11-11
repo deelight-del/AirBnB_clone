@@ -22,7 +22,6 @@ class HBNBCommand(cmd.Cmd):
 
     def __init__(self):
         """The magic init method for initializing attributes"""
-        super().__init__()
         self.valid_classes = {
                 "BaseModel": BaseModel,
                 "User": User,
@@ -33,6 +32,7 @@ class HBNBCommand(cmd.Cmd):
                 "Review": Review}
         self.storage = models.storage  # storage is already reloaded.
         self.dict_of_objects = self.storage.all()
+        super().__init__()
 
     def emptyline(self):
         """Method overriden to deal with empty lines appropriately."""
