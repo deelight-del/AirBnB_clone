@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""This is the entry point for our command line and execution loop"""
+"""This is the entry point for our command line and execution loop
+This module contains the class definiton of the HBNB """
+
 import readline
 import cmd
 from models.base_model import BaseModel
