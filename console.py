@@ -43,6 +43,37 @@ class HBNBCommand(cmd.Cmd):
         """EOF command to quit the commadnline Ctrl + D"""
         return True
 
+    def onecmd(self, line):
+        """ The onecmd module that executes a given line"""
+        self_cmd_dict = {
+                "all": self.do_all,
+                "count": self.do_count,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "update": self.do_update
+                }
+        list_of_cmd = self.parse_arg(line)
+        try:
+            cmd = list_of_cmd[0]
+        except IndexError:
+            cmd = "Invalid"
+        if "." in cmd and "(" in cmd:
+            list_of_cmd_attr = self.parse_dot_command(line)
+            try:
+                cmd = list_of_cmd_attr.pop(1)
+            except IndexError:
+                cmd = "Invalid"
+            # args = " ".join(list_of_cmd_attr)  You won't need this eventua
+            function = self_cmd_dict.get(cmd, None)
+            if function is None:
+                r = super(HBNBCommand, self).onecmd(line)
+            else:
+                function(list_of_cmd_attr)
+                r = False
+        else:
+            r = super(HBNBCommand, self).onecmd(line)
+        return r
+
     def do_create(self, args):
         """command to crate some instance: This create will
         accept some class (either BaseModel or other specified class
