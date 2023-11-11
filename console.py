@@ -274,6 +274,5 @@ class HBNBCommand(cmd.Cmd):
         return new_list
 
 
-
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
