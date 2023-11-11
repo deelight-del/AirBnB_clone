@@ -48,37 +48,37 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    def onecmd(self, line):
-        """ The onecmd module that executes a given line"""
-        self_cmd_dict = {
-                "all": self.do_all,
-                "count": self.do_count,
-                "show": self.do_show,
-                "destroy": self.do_destroy,
-                "update": self.do_update
-                }
-        list_of_cmd = parse_arg(line)
-        try:
-            cmd = list_of_cmd[0]
-        except IndexError:
-            cmd = "Invalid"
-        if "." in cmd and "(" in cmd:
-            list_of_cmd_attr = parse_dot_command(line)
-            try:
-                cmd = list_of_cmd_attr.pop(1)
-            except IndexError:
-                cmd = "Invalid"
-            # args = " ".join(list_of_cmd_attr)  You won't need this eventua
-            function = self_cmd_dict.get(cmd, None)
-            if function is None:
-                r = super(HBNBCommand, self).onecmd(line)
-            else:
-                function(list_of_cmd_attr)
-            r = False
-        else:
-            r = super(HBNBCommand, self).onecmd(line)
-        return r
-
+#    def onecmd(self, line):
+#        """ The onecmd module that executes a given line"""
+#        self_cmd_dict = {
+#                "all": self.do_all,
+#                "count": self.do_count,
+#                "show": self.do_show,
+#                "destroy": self.do_destroy,
+#                "update": self.do_update
+#                }
+#        list_of_cmd = parse_arg(line)
+#        try:
+#            cmd = list_of_cmd[0]
+#        except IndexError:
+#            cmd = "Invalid"
+#        if "." in cmd and "(" in cmd:
+#            list_of_cmd_attr = parse_dot_command(line)
+#            try:
+#                cmd = list_of_cmd_attr.pop(1)
+#            except IndexError:
+#                cmd = "Invalid"
+#            # args = " ".join(list_of_cmd_attr)  You won't need this eventua
+#            function = self_cmd_dict.get(cmd, None)
+#            if function is None:
+#                r = super(HBNBCommand, self).onecmd(line)
+#            else:
+#                function(list_of_cmd_attr)
+#            r = False
+#        else:
+#            r = super(HBNBCommand, self).onecmd(line)
+#        return r
+#
     def do_create(self, args):
         """command to crate some instance: This create will
         accept some class (either BaseModel or other specified class
@@ -96,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
             Class_of_object = self.valid_classes.get(list_of_args[0])
             any_object = Class_of_object()
             any_object.save()
-            print(any_object.id)
+            print("\n", any_object.id)
 
     def do_show(self, args):
         """Command to print a given object based on the class name and id"""
